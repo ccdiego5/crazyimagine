@@ -2,6 +2,8 @@
 
 Plugin de WordPress para Nómade Outdoor (prueba Crazy Imagine, PDF v1). Precio base en USD, tipos persistidos, conversión al vuelo. **Sin WooCommerce.**
 
+Esta rama es solo Nómade. El mapa de las dos variantes está en [`main`](https://github.com/ccdiego5/crazyimagine). Ágora vive en la rama `agora`.
+
 ## Requisitos
 
 - WordPress 6+ (la prueba pide 7.x)
