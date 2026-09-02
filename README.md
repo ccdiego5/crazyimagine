@@ -2,7 +2,7 @@
 
 Calendario base de festivos para Ágora Cultural (PDF v2). Fuente: Nager.Date **v3** (`date.nager.at`), sin clave. Segunda fuente: CSV.
 
-No mezclar con el repo de Nómade.
+Esta rama es solo Ágora. El mapa de las dos variantes está en [`main`](https://github.com/ccdiego5/crazyimagine). Nómade vive en la rama `nomade`.
 
 ## Arranque (LocalWP + Blocksy)
 
