@@ -1,0 +1,112 @@
+/**
+ * Theme Name: Blocksy Child
+ * Description: Hijo de Blocksy. Cambia el calendario y la tarjeta de Ágora.
+ * Author: Creative Themes
+ * Template: blocksy
+ * Text Domain: blocksy
+ * Version: 1.0.2
+ */
+
+.page .agora-calendar--theme {
+	margin-top: 0.5rem;
+}
+
+.agora-calendar--theme .agora-calendar__filter {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	margin: 0 0 0.75rem;
+}
+
+.agora-calendar--theme .agora-calendar__lede {
+	margin: 0 0 1.25rem;
+	color: #5b564e;
+	font-size: 0.95rem;
+}
+
+.agora-calendar--theme .agora-year {
+	display: grid;
+	gap: 1.1rem;
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 800px) {
+	.agora-calendar--theme .agora-year {
+		grid-template-columns: 1fr 1fr;
+	}
+}
+
+@media (min-width: 1200px) {
+	.agora-calendar--theme .agora-year {
+		grid-template-columns: 1fr 1fr 1fr;
+	}
+}
+
+.agora-calendar--theme .agora-month {
+	margin: 0;
+	padding: 0.9rem 0.85rem 1rem;
+	border-radius: 14px;
+	background: #fff;
+	border: 1px solid rgba(28, 32, 36, 0.08);
+	box-shadow: 0 8px 24px rgba(25, 42, 61, 0.06);
+}
+
+.agora-calendar--theme .agora-month__name {
+	margin: 0 0 0.65rem;
+	font-size: 1.05rem;
+}
+
+.agora-calendar--theme .agora-month__grid {
+	display: grid;
+	grid-template-columns: repeat(7, minmax(0, 1fr));
+	gap: 3px;
+}
+
+.agora-calendar--theme .agora-month__dow {
+	font-size: 0.68rem;
+	font-weight: 700;
+	text-align: center;
+	color: #8a847a;
+}
+
+.agora-calendar--theme .agora-month__day {
+	min-height: 3.4rem;
+	padding: 0.2rem 0.15rem;
+	border-radius: 6px;
+	background: #f6f3ee;
+	font-size: 0.62rem;
+	line-height: 1.2;
+}
+
+.agora-calendar--theme .agora-month__day.is-empty {
+	background: transparent;
+	min-height: 0;
+}
+
+.agora-calendar--theme .agora-month__num {
+	display: block;
+	font-size: 0.72rem;
+	font-weight: 700;
+	color: #3a4f66;
+}
+
+.agora-calendar--theme .agora-month__hol {
+	display: block;
+	margin-top: 0.12rem;
+	color: #7a3e12;
+	text-decoration: none;
+	overflow: hidden;
+	max-height: 2.3em;
+}
+
+.agora-calendar--theme .agora-month__day.is-holiday {
+	background: #e8dcc4;
+}
+
+.agora-card--theme {
+	margin: 0 0 1rem;
+	padding: 1rem 1.2rem;
+	border-radius: 12px;
+	background: #f4f1eb;
+	border: 1px solid rgba(28, 32, 36, 0.12);
+}
