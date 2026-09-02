@@ -1,52 +1,66 @@
-# Nómade Prices
+# Crazy Imagine — Prueba Full Stack Senior
 
-Plugin de WordPress para Nómade Outdoor (prueba Crazy Imagine, PDF v1). Precio base en USD, tipos persistidos, conversión al vuelo. **Sin WooCommerce.**
+Diego Cárdenas. Las dos variantes del examen, cada una en su rama. Este `main` no instala nada: es el mapa.
 
-## Requisitos
+| Rama | Variante | Plugin |
+|---|---|---|
+| [`nomade`](https://github.com/ccdiego5/crazyimagine/tree/nomade) | PDF v1 — Nómade Outdoor | `nomade-prices` |
+| [`agora`](https://github.com/ccdiego5/crazyimagine/tree/agora) | PDF v2 — Ágora Cultural | `agora-calendar` |
 
-- WordPress 6+ (la prueba pide 7.x)
-- PHP **8.3+**. La demo en LocalWP corre **PHP 8.5.3**
-- Tema: [Blocksy](https://wordpress.org/themes/blocksy/) (free) + el child de este repo. Sin Companion, sin Pro
+Cómo revisar una: `git checkout nomade` o `git checkout agora`, copiar esa carpeta a `wp-content/plugins/` y seguir el README de la rama. No mezclar los dos plugins en el mismo checkout.
 
-## Arranque (LocalWP)
+WordPress 6+ (la prueba pide 7.x) · PHP 8.3+ (esta Local corre 8.5.3) · tema [Blocksy](https://wordpress.org/themes/blocksy/) free + el child que va en cada rama. Sin WooCommerce, sin page builders, sin ACF.
 
-1. Copiar este directorio a `wp-content/plugins/nomade-prices/`
-2. Copiar `themes/blocksy-child/` a `wp-content/themes/blocksy-child/`
-3. Instalar y activar Blocksy, luego activar **Blocksy Child**
-4. Activar **Nómade Prices**
-5. Productos Nómade → Tipos de cambio → Sincronizar ahora
-6. Ajustes → Enlaces permanentes → Guardar
-7. Ficha: `/catalogo/kit-reparacion/?currency=COP`
+---
 
-## Qué hace
+## Nómade Outdoor (v1)
 
-- Fuentes: Frankfurter (primaria, sin clave) + CSV local
-- CPT `nomade_product`, meta USD, override de redondeo
-- Sync diario (WP-Cron) + botón, lock, log
-- REST: `GET /wp-json/nomade/v1/products/{id}/price?currency=MXN`
-- Shortcodes: `[nomade_price]` `[nomade_catalog]`
-- El child overridea `templates/price-block.php` vía `locate_template`. Desactivar el child vuelve al markup del plugin
+Elena vende el mismo producto en seis países con un precio en dólares. No hay WooCommerce y no lo van a instalar. El visitante tiene que ver su moneda sin esperar a un servicio de fuera.
 
-Monedas: MXN, COP, CLP, PEN, EUR, VES.
+**Qué se hizo**
 
-## Hooks
+- Una API sin clave (Frankfurter v2) y un CSV de respaldo. Un contrato (`RateSource`). Las seis monedas en el mismo GET.
+- Los tipos se guardan. El precio se calcula en PHP. El visitante no pega a Frankfurter.
+- CPT `nomade_product`, override solo si Elena cambia el número. Si deja el calculado, el precio sigue al tipo.
+- Sync diario (WP-Cron) + **Sincronizar ahora**. No cada hora: el tipo no cambia así y el hosting no tiene cron de sistema.
+- REST: `GET /wp-json/nomade/v1/products/{id}/price?currency=COP`. Lee tipos locales.
+- Front: `?currency=` + cookie. El selector funciona sin JavaScript.
+- Child de Blocksy: cambia `templates/price-block.php` sin editar el plugin.
 
-```php
-// Filtrar monedas activas.
-add_filter( 'nomade_active_currencies', function ( array $codes ): array {
-	return $codes;
-} );
+**Cómo se decidió** (y qué se recortó) está en la rama:
 
-// Tras un sync que persistió tipos.
-add_action( 'nomade_sync_completed', function ( $payload, bool $manual, string $source_id ): void {
-	// $payload = option nomade_rates
-}, 10, 3 );
-```
+- Arranque: [`README.md`](https://github.com/ccdiego5/crazyimagine/blob/nomade/README.md)
+- Decisiones: [`DECISIONS.md`](https://github.com/ccdiego5/crazyimagine/blob/nomade/DECISIONS.md)
+- Qué hizo la IA y qué reescribí: [`AI.md`](https://github.com/ccdiego5/crazyimagine/blob/nomade/AI.md)
 
-## Límites
+Ficha de prueba: `/catalogo/kit-reparacion/?currency=COP`.
 
-- El visitante no pega a Frankfurter. Si el sync falla, se quedan los tipos anteriores
-- VES de Frankfurter no es mesa BCV. Se muestra fecha y fuente
-- Domingo = último tipo hábil, con fecha a la vista
+---
 
-Decisiones: [`DECISIONS.md`](DECISIONS.md). Uso de IA: [`AI.md`](AI.md).
+## Ágora Cultural (v2)
+
+Marta no puede seguir pegando un Excel cada enero. Quiere el calendario base de festivos en seis países, y poder corregir nombres sin que el sync se lo borre.
+
+**Qué se hizo**
+
+- Nager.Date **v3** (`date.nager.at`) + CSV. La v4 solo manda el nombre en inglés; la v3 trae `localName`.
+- No hay filtro por ciudad: Nager no lo tiene (`counties` es región, no sede). El visitante filtra por país.
+- Sync diario + botón. Upsert por país + fecha + nombre oficial. Las correcciones de Marta no se pisan.
+- CPT `agora_event` + taxonomía de país. Solo el año en curso.
+- REST: `GET /wp-json/agora/v1/events?country=ES&page=1&per_page=20`. Lee posts locales. No llama a Nager.
+- Front: calendario de 12 meses en PHP (`?country=ES`). Sin JS recarga.
+- Child de Blocksy: overridea `templates/calendar.php` y `templates/event-card.php`.
+
+**Cómo se decidió** (y qué se recortó) está en la rama:
+
+- Arranque: [`README.md`](https://github.com/ccdiego5/crazyimagine/blob/agora/README.md)
+- Decisiones: [`DECISIONS.md`](https://github.com/ccdiego5/crazyimagine/blob/agora/DECISIONS.md)
+- Qué hizo la IA y qué reescribí: [`AI.md`](https://github.com/ccdiego5/crazyimagine/blob/agora/AI.md)
+
+Página de prueba: `/calendario-agora/?country=ES`.
+
+---
+
+## Lo que no está en GitHub
+
+Vídeo y correo van por fuera (Loom + mail a Gaby). No hay `.env` ni el WordPress de LocalWP.
