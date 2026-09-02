@@ -1,0 +1,63 @@
+/**
+ * Theme Name: Blocksy Child
+ * Description: Hijo de Blocksy. Solo cambia el bloque de precio de Nómade.
+ * Author: Creative Themes
+ * Template: blocksy
+ * Text Domain: blocksy
+ * Version: 1.0.1
+ */
+
+body.single-nomade_product .entry-header .entry-meta {
+	display: none;
+}
+
+.nomade-price--theme {
+	margin: 1.75rem 0 0;
+	padding: 1.25rem 1.4rem;
+	border: 1px solid rgba(28, 32, 36, 0.12);
+	border-radius: 14px;
+	background: #f4f1eb;
+}
+
+.nomade-price--theme .nomade-price__switcher {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+	margin: 0 0 0.85rem;
+}
+
+.nomade-price--theme select {
+	min-width: 8rem;
+}
+
+.nomade-price--theme .nomade-price__amount {
+	margin: 0;
+	font-size: 1.85rem;
+	line-height: 1.2;
+}
+
+.nomade-price--theme .nomade-price__meta {
+	margin: 0.45rem 0 0;
+	color: #5b564e;
+	font-size: 0.88rem;
+}
+
+.nomade-price--theme .nomade-price__note {
+	display: inline-block;
+	margin-top: 0.55rem;
+	padding: 0.15rem 0.55rem;
+	border-radius: 999px;
+	background: #e8dcc4;
+	font-size: 0.8rem;
+}
+
+.nomade-catalog {
+	display: grid;
+	gap: 1.1rem;
+}
+
+@media (min-width: 720px) {
+	.nomade-catalog {
+		grid-template-columns: 1fr 1fr;
+	}
+}
